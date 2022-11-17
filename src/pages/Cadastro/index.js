@@ -1,5 +1,9 @@
 import './cadastro.css';
 
+import { auth } from '../../Services/firebaseConnection';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,7 +12,9 @@ export default function Cadastro() {
     const [inputEmail, setInputEmail] = useState('');
     const [inputSenha, setInputSenha] = useState('');
 
-    function cadastrar(e) {
+    const navigate = useNavigate();
+
+    async function cadastrar(e) {
         e.preventDefault();
 
         if(inputEmail === '' || inputSenha === '') {
@@ -17,7 +23,24 @@ export default function Cadastro() {
                 theme:'dark',
                 position: 'bottom-center'
             })
+
+            return;
         }
+
+        await createUserWithEmailAndPassword(auth, inputEmail, inputSenha)
+        .then(() => {
+            toast.success('Usuario Criado com Sucesso', {
+                theme: 'dark',
+                position: 'top-center'
+            })
+            navigate('/', { replace: true } )
+        })
+        .catch((error) => {
+            toast.error(`Ops Algo deu Errado ${error}`, {
+                theme: 'dark',
+                position: 'top-center'
+            })
+        })
 
     }
 
@@ -47,7 +70,7 @@ export default function Cadastro() {
                 />
 
                 <button className='btnAcessar' type='submit'>
-                    Acessar
+                    Criar sua Conta
                 </button>
 
             </form>

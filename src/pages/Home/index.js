@@ -1,13 +1,20 @@
 import './home.css';
+
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { auth }  from '../../Services/firebaseConnection';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
 export default function Home() {
     const [inputEmail, setInputEmail] = useState('');
     const [inputSenha, setInputSenha] = useState('');
+    const navigate = useNavigate();
 
-    function logarApp(e) {
+    async function logarApp(e) {
         e.preventDefault();
 
         if(inputEmail === '' || inputSenha === '') {
@@ -16,9 +23,25 @@ export default function Home() {
                 theme:'dark',
                 position: 'bottom-center'
             })
+
+            return;
         }
 
-        
+        await signInWithEmailAndPassword(auth, inputEmail, inputSenha)
+        .then(() => {
+            navigate('/admin', { replace: true });
+
+            toast.success('Bem Vindo de Volta', {
+                theme: 'dark',
+                position: 'top-center'
+            })
+        })
+        .catch(() => {
+            toast.error(`Ops Algo deu Errado`, {
+                theme: 'dark',
+                position: 'top-center'
+            })
+        })
         
         
     }
