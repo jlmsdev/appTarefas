@@ -1,0 +1,84 @@
+.adminContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.btnCadastra {
+    margin-bottom: 3rem;
+}
+
+.adminContainer h1 {
+    margin-bottom: 3rem;
+}
+
+.adminContainer textarea {
+    resize: none;
+    height: 5rem;
+    font-family: sans-serif;
+    padding: .5rem;
+    border-radius: 4px;
+    outline: none;
+    border: 0;
+    font-size: 1rem;
+}
+
+.containerTarefa {
+    width: 90%;
+    margin-top: 1rem;
+    margin-bottom: .4rem;
+    max-width: 600px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    background: #15171a;
+    -webkit-box-shadow: 8px 8px 14px #0f1012, -8px -8px 14px #1b1e22;
+    box-shadow: 8px 8px 14px #0f1012, -8px -8px 14px #1b1e22;
+}
+
+.containerTarefa .textTarefa {
+    text-align: justify;
+}
+
+.containerTarefa .dtaHora {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    font-style: italic;
+}
+
+.containerTarefa .dtaHora svg,
+.containerTarefa .userInsert svg {
+    margin-right: .5rem;
+}
+
+.containerTarefa .userInsert {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.areaButtons .btnEdit {
+    margin-right: 1rem;
+    padding: .5rem;
+    border: 0;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.areaButtons .btnDelete {
+    margin-right: 1rem;
+    padding: .5rem;
+    border: 0;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #FFF;
+}
+
