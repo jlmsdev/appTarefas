@@ -11,7 +11,6 @@ import { toast } from 'react-toastify';
 export default function Cadastro() {
     const [inputEmail, setInputEmail] = useState('');
     const [inputSenha, setInputSenha] = useState('');
-
     const navigate = useNavigate();
 
     async function cadastrar(e) {
@@ -33,7 +32,7 @@ export default function Cadastro() {
                 theme: 'dark',
                 position: 'top-center'
             })
-            navigate('/', { replace: true } )
+            navigate('/admin', { replace: true } )
         })
         .catch((error) => {
             toast.error(`Ops Algo deu Errado ${error}`, {
@@ -49,7 +48,7 @@ export default function Cadastro() {
     return(
         <div className='homeContainer'>
             <h1>Crie Sua Conta</h1>
-            <p>Comece Agora a Gerenciar suas Tarefas</p>
+            <p>Comece Agora mesmo a Gerenciar suas Tarefas</p>
 
             <form className='form' onSubmit={cadastrar}>
 

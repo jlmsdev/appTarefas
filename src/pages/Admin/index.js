@@ -1,10 +1,10 @@
 import './admin.css';
 import Header from '../../components/Header';
+
 import { useState, useEffect } from 'react';
 import { BiTimeFive } from 'react-icons/bi';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { toast } from 'react-toastify';
-
 import { banco } from '../../Services/firebaseConnection';
 import {
     addDoc,
@@ -14,14 +14,17 @@ import {
     orderBy,
     where,
     doc,
-    deleteDoc
+    deleteDoc,
+    updateDoc
 } from 'firebase/firestore';
+
 
 
 export default function Admin() {
     const [tarefaInput, setTarefaInput] = useState('');
     const [user, setUser] = useState({});
     const [tarefas, setTarefas] = useState([]);
+    const [edit, setEdit] = useState({});
 
     
 
@@ -53,7 +56,6 @@ export default function Admin() {
                 })
             }
 
-
         }
 
         loadTarefas();
@@ -68,6 +70,11 @@ export default function Admin() {
                 theme: 'dark',
                 position: 'top-center'
             })
+            return;
+        }
+
+        if(edit?.id) {
+            atualizarTarefa();
             return;
         }
 
@@ -114,6 +121,34 @@ export default function Admin() {
 
     }
 
+    async function editTarefa(item) {
+        
+        setTarefaInput(item.tarefa);
+        setEdit(item);
+    }
+
+    async function atualizarTarefa() {
+        const docRef = doc(banco, 'tarefas', edit?.id);
+        await updateDoc(docRef, {
+            tarefa: tarefaInput
+        })
+        .then(() => {
+            toast.warn('Tarefa Editada', {
+                theme: 'dark',
+                position: 'top-center'
+            })
+            
+            setTarefaInput('');
+            setEdit({});
+        })
+        .catch(() => {
+            toast.error('Algo deu Errado', {
+                theme: 'dark',
+                position: 'top-center'
+            })
+        })
+    }
+
 
     return(
         <div className='adminContainer'>
@@ -127,9 +162,16 @@ export default function Admin() {
                     onChange={ (e)=> setTarefaInput(e.target.value) }
                 />
 
-                <button className='btnCadastra' type='submit'>
-                    Cadastrar Tarefa
-                </button>
+                { Object.keys(edit).length > 0 ? (
+                    <button className='btnCadastra' type='submit' style={{backgroundColor: '#6add39', color: '#000'}}>
+                        Atualizar Tarefa
+                    </button>
+                ) : (
+                    <button className='btnCadastra' type='submit'>
+                        Cadastrar Tarefa
+                    </button>
+                )}
+
             </form>
 
             {tarefas.map((item) => (
@@ -140,7 +182,7 @@ export default function Admin() {
                     <span className='userInsert'> <AiOutlineUserAdd size={25}/> {user.email}</span>
 
                     <div className='areaButtons'>
-                        <button className='btnEdit'>Editar</button>
+                        <button onClick={ ()=> editTarefa(item)} className='btnEdit'>Editar</button>
                         <button className='btnDelete' onClick={() => deleteTarefa(item.id) }>Concluir</button>
                     </div>
                 </article>

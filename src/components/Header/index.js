@@ -36,7 +36,7 @@ export default function Header() {
     return(
         <header className='containerHeader'>
             <nav className='menu'>
-                <span className='userLogado'>{user.email}</span>
+                <span className='userLogado'>{user?.email}</span>
                 <button onClick={deslogarApp} className='btnDeslogar'>
                     <SlLogout size={25} />
                 </button>
